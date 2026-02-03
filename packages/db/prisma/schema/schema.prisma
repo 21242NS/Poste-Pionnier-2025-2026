@@ -1,9 +1,171 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated"
+  provider     = "prisma-client"
+  output       = "../generated"
   moduleFormat = "esm"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id            String      @id
+  name          String
+  email         String
+  role          UserRole    @default(PARENT_ANIMEE)
+  emailVerified Boolean     @default(false)
+  image         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  commandes     Commande[]
+  tickets       Ticket[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model Commande {
+  id             String          @id @default(cuid())
+  userId         String?
+  user           User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  role           UserRole
+  email          String
+  section        Section
+  name           String
+  sandwichChoice SandwichChoice
+  tomato         Boolean         @default(false)
+  lettuce        Boolean         @default(false)
+  cucumber       Boolean         @default(false)
+  sauce          SauceChoice
+  juice          JuiceChoice
+  remark         String?
+  payment        Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([userId])
+  @@map("commande")
+}
+
+model StockBarPi {
+  id               String   @id @default(cuid())
+  itemName         String
+  quantity         Int
+  requiredQuantity Int
+  unitValue        Decimal  @db.Decimal(10, 2)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("Stock_BAR_PI")
+}
+
+model StockSandwich {
+  id               String   @id @default(cuid())
+  itemName         String
+  quantity         Int
+  requiredQuantity Int
+  unitValue        Decimal  @db.Decimal(10, 2)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("Stock_Sandwich")
+}
+
+model Ticket {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name        String
+  email       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@map("ticket")
+}
+
+enum UserRole {
+  PARENT_ANIMEE
+  ANIMEE
+  ANIMATEUR
+  ADMIN
+  EXTERN
+}
+
+enum Section {
+  BALADIN
+  MEUTE_SEEONEE
+  MEUTE_DU_PEUPLE_LIBRE
+  TROUPE_DU_GRAND_VENEUR_GOELAND
+}
+
+enum SandwichChoice {
+  POULET_CURRY
+  HOUMOUS
+  CLUB_JAMBON_FROMAGE
+  JAMBON
+  FROMAGE
+  THON
+}
+
+enum SauceChoice {
+  MAYONNAISE
+  KETCHUP
+  NONE
+}
+
+enum JuiceChoice {
+  ORANGE
+  POMME
 }
