@@ -1,5 +1,13 @@
 {
   "name": "@Poste-Pionnier-2025-2026/config",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "main": "tsconfig.base.json",
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    ".": "./tsconfig.base.json"
+  },
+  "files": [
+    "tsconfig.base.json"
+  ]
 }
