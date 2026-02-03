@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "scheme": "Poste-Pionnier-2025-2026",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "Poste-Pionnier-2025-2026",
+    "slug": "Poste-Pionnier-2025-2026",
+    "plugins": ["expo-font"],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Poste-Pionnier-2025-2026",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "db:push": "turbo -F @Poste-Pionnier-2025-2026/db db:push",
+    "db:studio": "turbo -F @Poste-Pionnier-2025-2026/db db:studio",
+    "db:generate": "turbo -F @Poste-Pionnier-2025-2026/db db:generate",
+    "db:migrate": "turbo -F @Poste-Pionnier-2025-2026/db db:migrate",
+    "db:start": "turbo -F @Poste-Pionnier-2025-2026/db db:start",
+    "db:watch": "turbo -F @Poste-Pionnier-2025-2026/db db:watch",
+    "db:stop": "turbo -F @Poste-Pionnier-2025-2026/db db:stop",
+    "db:down": "turbo -F @Poste-Pionnier-2025-2026/db db:down"
+  },
+  "dependencies": {
+    "@Poste-Pionnier-2025-2026/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@Poste-Pionnier-2025-2026/config": "workspace:*",
+    "@types/node": "^22.13.14",
+    "turbo": "^2.6.3",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.28.2"
+}
