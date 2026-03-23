@@ -12,7 +12,7 @@ model User {
   id            String      @id
   name          String
   email         String
-  role          UserRole    @default(PARENT_ANIMEE)
+  role          String    
   emailVerified Boolean     @default(false)
   image         String?
   createdAt     DateTime    @default(now())
@@ -78,16 +78,16 @@ model Commande {
   id             String          @id @default(cuid())
   userId         String?
   user           User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
-  role           UserRole
+  role           String
   email          String
-  section        Section
+  section        String
   name           String
-  sandwichChoice SandwichChoice
+  sandwichChoice String
   tomato         Boolean         @default(false)
   lettuce        Boolean         @default(false)
   cucumber       Boolean         @default(false)
-  sauce          SauceChoice
-  juice          JuiceChoice
+  sauce          String
+  juice          String
   remark         String?
   payment        Boolean         @default(false)
   createdAt      DateTime        @default(now())
@@ -135,37 +135,3 @@ model Ticket {
   @@map("ticket")
 }
 
-enum UserRole {
-  PARENT_ANIMEE
-  ANIMEE
-  ANIMATEUR
-  ADMIN
-  EXTERN
-}
-
-enum Section {
-  BALADIN
-  MEUTE_SEEONEE
-  MEUTE_DU_PEUPLE_LIBRE
-  TROUPE_DU_GRAND_VENEUR_GOELAND
-}
-
-enum SandwichChoice {
-  POULET_CURRY
-  HOUMOUS
-  CLUB_JAMBON_FROMAGE
-  JAMBON
-  FROMAGE
-  THON
-}
-
-enum SauceChoice {
-  MAYONNAISE
-  KETCHUP
-  NONE
-}
-
-enum JuiceChoice {
-  ORANGE
-  POMME
-}
