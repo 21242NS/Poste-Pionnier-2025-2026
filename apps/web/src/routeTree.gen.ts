@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TicketRouteImport } from './routes/ticket'
 import { Route as SuccessRouteImport } from './routes/success'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -16,6 +17,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
+const TicketRoute = TicketRouteImport.update({
+  id: '/ticket',
+  path: '/ticket',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/success': typeof SuccessRoute
+  '/ticket': typeof TicketRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/success': typeof SuccessRoute
+  '/ticket': typeof TicketRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/success': typeof SuccessRoute
+  '/ticket': typeof TicketRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
 }
@@ -79,16 +88,25 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/success'
+    | '/ticket'
     | '/api/auth/$'
     | '/api/rpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/success' | '/api/auth/$' | '/api/rpc/$'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/success'
+    | '/ticket'
+    | '/api/auth/$'
+    | '/api/rpc/$'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/login'
     | '/success'
+    | '/ticket'
     | '/api/auth/$'
     | '/api/rpc/$'
   fileRoutesById: FileRoutesById
@@ -98,12 +116,20 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   SuccessRoute: typeof SuccessRoute
+  TicketRoute: typeof TicketRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ticket': {
+      id: '/ticket'
+      path: '/ticket'
+      fullPath: '/ticket'
+      preLoaderRoute: typeof TicketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/success': {
       id: '/success'
       path: '/success'
@@ -154,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   SuccessRoute: SuccessRoute,
+  TicketRoute: TicketRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
 }

@@ -1,7 +1,7 @@
 import { env } from "@Poste-Pionnier-2025-2026/env/server";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-import { PrismaClient } from "../prisma/generated/client";
+import { PrismaClient } from "../prisma/generated/client.js";
 
 const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });

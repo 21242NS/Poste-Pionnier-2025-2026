@@ -23,6 +23,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "parent", // Rôle par défaut lors de l'inscription
+        required: true,
+      },
+    },
+  },
   plugins: [
     polar({
       client: polarClient,

@@ -2,10 +2,12 @@ import type { RouterClient } from "@orpc/server";
 
 import { commandRouter } from "./command";
 import { ticket  } from "./ticket";
+import { authRouter } from "./auth";
 import { protectedProcedure, publicProcedure } from "../index";
 
 export const appRouter = {
   ...commandRouter,
+  ...authRouter,
   healthCheck: publicProcedure.handler(() => {
     return "OK";
   }),
