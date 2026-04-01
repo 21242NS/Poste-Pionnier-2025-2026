@@ -1,34 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 import { orpc } from "@/utils/orpc";
-import { useState } from "react";
+import { useTicket } from "hooks";
+import { getUser } from "@/functions/get-user";
+
 
 export const Route = createFileRoute("/ticket")({
   component: RouteComponent,
+  beforeLoad: async () => {
+      const session = await getUser();
+      return { session };
+    },
+    loader: async ({ context }) => {
+      if (!context.session) {
+        throw redirect({
+          to: "/login",
+        });
+      }
+    },
 });
 
 
- function useTicket() {
-  const tickets = useQuery(orpc.ticket.list.queryOptions());
-  const queryClient = useQueryClient()
-  const addTicket = useMutation(orpc.ticket.create.mutationOptions({
-    onMutate: (newTicket) => {
-      queryClient.setQueryData(orpc.ticket.list.queryKey(), (old) => [...(old || []), { id: Math.random().toString(), ...newTicket, userId: 'aaaa', createdAt: new Date(), updatedAt: new Date()  }]);
-    },
-    onSettled: () => {
-     queryClient.invalidateQueries(); 
-    }
-  }));
-  const [description, setDescription] = useState('')
-  return { tickets, description, setDescription, addTicket() {
-    addTicket.mutate({ description, userId: 'aaaa' });
-    setDescription('');
-  } };
-}
+
 
 function RouteComponent() {
-  const { tickets, addTicket, description, setDescription } = useTicket()
+  const { tickets, addTicket, description, setDescription } = useTicket(orpc)
   return (
    <div>
     <h1>Tickets</h1>

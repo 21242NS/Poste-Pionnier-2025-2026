@@ -25,37 +25,20 @@ const TITLE_TEXT = `
  `;
 
 
- function useTicket() {
-  const tickets = useQuery(orpc.ticket.list.queryOptions());
-  const queryClient = useQueryClient()
-  const addTicket = useMutation(orpc.ticket.create.mutationOptions({
-    onMutate: (newTicket) => {
-      queryClient.setQueryData(orpc.ticket.list.queryKey(), (old) => [...(old || []), { id: Math.random().toString(), ...newTicket, userId: 'aaaa', createdAt: new Date(), updatedAt: new Date()  }]);
-    },
-    onSettled: () => {
-     queryClient.invalidateQueries(); 
-    }
-  }));
-  const [description, setDescription] = useState('')
-  return { tickets, description, setDescription, addTicket() {
-    addTicket.mutate({ description, userId: 'aaaa' });
-    setDescription('');
-  } };
-}
+
 
 function HomeComponent() {
-  const { tickets, addTicket, description, setDescription } = useTicket()
   return (
-   <div>
-    <h1>Tickets</h1>
-    {tickets.isLoading && <p>Loading...</p>}
-    <ul>
-      {tickets.data?.map((ticket) => (
-        <li key={ticket.id}>{ticket.description}</li>
-      ))}
-    </ul>
-    <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-    <button onClick={addTicket}>Add Ticket</button>
-   </div>
-  );
+    <>
+      <head>
+        <title>Poste Pionnier 124</title>
+      </head>
+      <main>
+          <h1>Poste Pionnier 124</h1>
+          <div>
+            <h2>A propos de nous</h2>
+            <p> Nous somme le poste pionnier de la 124 ème unité de watermeal-boitsfor. Bienvenue sur notre site internet ou vous pouvez ...</p>
+        </div>
+      </main>
+    </>);
 }
