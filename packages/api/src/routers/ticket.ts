@@ -36,4 +36,19 @@ export const ticket = {
         },
       });
     }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .handler(async ({ input, context }) => {
+      return await prisma.ticket.delete({
+        where: { id: input.id },
+      });
+    }),
+  update : protectedProcedure
+    .input(z.object({ id: z.string(), description: z.string() }))
+    .handler(async ({ input, context }) => {
+      return await prisma.ticket.update({
+        where: { id: input.id },
+        data: { description: input.description },
+      });
+    }),
 };

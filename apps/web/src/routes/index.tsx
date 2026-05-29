@@ -37,7 +37,7 @@ function HomeComponent() {
           <h1>Poste Pionnier 124</h1>
           <div>
             <h2>A propos de nous</h2>
-            <p> Nous somme le poste pionnier de la 124 ème unité de watermeal-boitsfor. Bienvenue sur notre site internet ou vous pouvez ...</p>
+            <p> Nous somme le poste pionnier de la 124 ème unité de watermeal-boitsfort. Bienvenue sur notre site internet ou vous pouvez ...</p>
         </div>
       </main>
     </>);

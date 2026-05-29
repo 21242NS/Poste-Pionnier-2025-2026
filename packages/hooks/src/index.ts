@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { orpc } from "../../../apps/web/src/utils/orpc";
 import { useState } from "react";
 
+export * from "./commande";
+
 type ORPC = typeof orpc;
 
 export function useTicket(orpc: ORPC) {
@@ -31,7 +33,20 @@ export function useTicket(orpc: ORPC) {
     }),
   );
   const [description, setDescription] = useState("");
-
+  const updateTicket = useMutation(
+    orpc.ticket.update.mutationOptions({
+      onSettled: () => {
+        queryClient.invalidateQueries();
+      },
+    }),
+  );
+  const deleteTicket = useMutation(
+    orpc.ticket.delete.mutationOptions({
+      onSettled: () => {
+        queryClient.invalidateQueries();
+      },
+    }),
+  );
   return {
     tickets,
     description,
@@ -40,5 +55,12 @@ export function useTicket(orpc: ORPC) {
       addTicket.mutate({ description });
       setDescription("");
     },
+    updateTicket(id: string, description: string) {
+      updateTicket.mutate({ id, description });
+    },
+    deleteTicket(id: string) {
+      deleteTicket.mutate({ id });
+    },
+
   };
 }

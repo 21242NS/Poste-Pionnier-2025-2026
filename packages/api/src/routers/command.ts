@@ -30,8 +30,28 @@ const addCommandInput = z.object({
 	remark: z.string().max(500).optional(),
 	payment: z.boolean().optional(),
 });
-
 export const commandRouter = {
+	list : protectedProcedure.handler(async ({ context }) => {
+		const currentUser = await prisma.user.findUnique({
+			where: { id: context.session.user.id },
+			select: { role: true },
+		});
+
+		if (!currentUser) {
+			throw new Error("Unauthorized");
+		}
+
+		if (currentUser.role === "admin") {
+			return await prisma.commande.findMany({
+				orderBy: { createdAt: "desc" },
+			});
+		}
+
+		return await prisma.commande.findMany({
+			where: { userId: context.session.user.id },
+			orderBy: { createdAt: "desc" },
+		});
+	}),
 	addCommand: protectedProcedure.input(addCommandInput).handler(async ({ input, context }) => {
 		const created = await prisma.commande.create({
 			data: {
@@ -40,5 +60,24 @@ export const commandRouter = {
 			},
 		});
 		return created;
+	}),
+	deleteCommand: protectedProcedure.input(z.object({ id: z.string() })).handler(async ({ input, context }) => {
+		const deleted = await prisma.commande.delete({
+			where: {
+				id: input.id,
+			},
+		});
+		return deleted;
+	}),
+	updateCommand: protectedProcedure.input(z.object({ id: z.string(), data: addCommandInput })).handler(async ({ input, context }) => {
+		const updated = await prisma.commande.update({
+			where: {
+				id: input.id,
+			},
+			data: {
+				...input.data
+			},
+		});
+		return updated;
 	}),
 };
