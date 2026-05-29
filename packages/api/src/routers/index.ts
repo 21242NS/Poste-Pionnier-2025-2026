@@ -6,7 +6,7 @@ import { authRouter } from "./auth";
 import { protectedProcedure, publicProcedure } from "../index";
 
 export const appRouter = {
-  ...commandRouter,
+  command: commandRouter,
   ...authRouter,
   healthCheck: publicProcedure.handler(() => {
     return "OK";
