@@ -1,19 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { z } from "zod";
 
 import SignInForm from "@/components/sign-in-form";
 import SignUpForm from "@/components/sign-up-form";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: z.object({
+    mode: z.enum(["signin", "signup"]).optional().default("signin"),
+  }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [showSignIn, setShowSignIn] = useState(false);
+  const { mode } = Route.useSearch();
+  const navigate = Route.useNavigate();
 
-  return showSignIn ? (
-    <SignInForm onSwitchToSignUp={() => setShowSignIn(false)} />
+  return mode === "signup" ? (
+    <SignUpForm onSwitchToSignIn={() => navigate({ search: { mode: "signin" } })} />
   ) : (
-    <SignUpForm onSwitchToSignIn={() => setShowSignIn(true)} />
+    <SignInForm onSwitchToSignUp={() => navigate({ search: { mode: "signup" } })} />
   );
 }

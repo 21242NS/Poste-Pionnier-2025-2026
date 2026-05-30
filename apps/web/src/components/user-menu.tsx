@@ -24,9 +24,14 @@ export default function UserMenu() {
 
   if (!session) {
     return (
-      <Link to="/login">
-        <Button variant="outline">Sign In</Button>
-      </Link>
+      <div className="flex gap-2">
+        <Link to="/login" search={{ mode: "signin" }}>
+          <Button variant="outline">Se connecter</Button>
+        </Link>
+        <Link to="/login" search={{ mode: "signup" }}>
+          <Button>S&apos;inscrire</Button>
+        </Link>
+      </div>
     );
   }
 
