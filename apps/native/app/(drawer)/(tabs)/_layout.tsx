@@ -5,42 +5,56 @@ import { useThemeColor } from "heroui-native";
 export default function TabLayout() {
   const themeColorForeground = useThemeColor("foreground");
   const themeColorBackground = useThemeColor("background");
+  const themeColorSuccess = useThemeColor("link");
 
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
-        headerStyle: {
-          backgroundColor: themeColorBackground,
-        },
+        headerStyle: { backgroundColor: themeColorBackground },
         headerTintColor: themeColorForeground,
-        headerTitleStyle: {
-          color: themeColorForeground,
-          fontWeight: "600",
-        },
-        tabBarStyle: {
-          backgroundColor: themeColorBackground,
-        },
+        headerTitleStyle: { color: themeColorForeground, fontWeight: "600" },
+        tabBarStyle: { backgroundColor: themeColorBackground, borderTopColor: themeColorBackground },
+        tabBarActiveTintColor: themeColorSuccess,
+        tabBarInactiveTintColor: themeColorForeground,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <Ionicons name="home" size={size} color={color} />
+          title: "Accueil",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: "Explore",
-          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <Ionicons name="compass" size={size} color={color} />
+          title: "Commandes",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="restaurant-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="tickets"
+        options={{
+          title: "Billets",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="receipt-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Carte",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="map-outline" size={size} color={color} />
           ),
         }}
       />
     </Tabs>
   );
 }
+

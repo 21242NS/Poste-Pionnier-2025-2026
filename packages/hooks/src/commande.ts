@@ -10,6 +10,24 @@ type SandwichChoice = "POULET_CURRY" | "HOUMOUS" | "CLUB_JAMBON_FROMAGE" | "JAMB
 type Sauce = "MAYONNAISE" | "KETCHUP" | "NONE";
 type Juice = "ORANGE" | "POMME";
 
+export type CommandeRecord = {
+  id: string;
+  userId: string | null;
+  role: string;
+  email: string;
+  section: string;
+  name: string;
+  sandwichChoice: string;
+  tomato: boolean;
+  lettuce: boolean;
+  cucumber: boolean;
+  sauce: string;
+  juice: string;
+  remark: string | null;
+  payment: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export type CommandInput = {
   role: Role;

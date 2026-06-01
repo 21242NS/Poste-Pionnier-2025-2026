@@ -8,7 +8,28 @@
     },
     "name": "Poste-Pionnier-2025-2026",
     "slug": "Poste-Pionnier-2025-2026",
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Poste Pionnier a besoin de ta position pour afficher la carte et calculer la distance jusqu'au local.",
+          "locationWhenInUsePermission": "Poste Pionnier a besoin de ta position pour afficher la carte et calculer la distance jusqu'au local."
+        }
+      ]
+    ],
+    "ios": {
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Poste Pionnier a besoin de ta position pour afficher la carte et calculer la distance jusqu'au local.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Poste Pionnier a besoin de ta position pour afficher la carte et calculer la distance jusqu'au local."
+      }
+    },
+    "android": {
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
