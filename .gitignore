@@ -1,11 +1,16 @@
 # Dependencies
 node_modules
+**/node_modules
+.pnpm-store
+**/.pnpm-store
 .pnp
 .pnp.js
 
 # Build outputs
 dist
 build
+**/dist
+**/build
 *.tsbuildinfo
 
 # Environment variables
@@ -35,6 +40,11 @@ lerna-debug.log*
 
 # Turbo
 .turbo
+**/.turbo
+
+# Expo
+.expo
+**/.expo
 
 # Better-T-Stack
 .alchemy
@@ -46,5 +56,6 @@ coverage
 # Misc
 *.tgz
 .cache
+**/.cache
 tmp
 temp

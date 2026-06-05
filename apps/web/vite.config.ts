@@ -7,6 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [tsconfigPaths(), tailwindcss(), tanstackStart(), viteReact()],
   server: {
+    host: "0.0.0.0",
     port: 3001,
     cors: {
       origin: ["http://localhost:8081"],

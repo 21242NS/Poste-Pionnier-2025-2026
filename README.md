@@ -67,3 +67,25 @@ Poste-Pionnier-2025-2026/
 - `pnpm run dev:native`: Start the React Native/Expo development server
 - `pnpm run db:push`: Push schema changes to database
 - `pnpm run db:studio`: Open database studio UI
+
+## Docker Development
+
+You can boot PostgreSQL, the web/API server, and the Expo dev server with a single command:
+
+```bash
+docker compose up --build
+```
+
+This starts:
+
+- PostgreSQL on `5432`
+- Web/API on `http://localhost:3001`
+- Expo/Metro on `8081` with Expo ports `19000`, `19001`, and `19002`
+
+If you run the mobile app from Expo Go on a real device, override the server URL so the device can reach your machine:
+
+```bash
+EXPO_PUBLIC_SERVER_URL=http://YOUR_LOCAL_IP:3001 docker compose up --build
+```
+
+For simulators running on the same machine, the default `http://localhost:3001` is usually enough.
