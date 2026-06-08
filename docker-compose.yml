@@ -37,7 +37,8 @@ services:
       BETTER_AUTH_URL: http://localhost:3001
       CORS_ORIGIN: http://localhost:3001
       POLAR_SUCCESS_URL: http://localhost:3001/success?checkout_id={CHECKOUT_ID}
-      EXPO_PUBLIC_SERVER_URL: ${EXPO_PUBLIC_SERVER_URL:-http://localhost:3001}
+      EXPO_PUBLIC_SERVER_URL: http://${HOST_IP:-localhost}:3001
+      REACT_NATIVE_PACKAGER_HOSTNAME: ${HOST_IP:-localhost}
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
       EXPO_DEVTOOLS_LISTEN_ADDRESS: 0.0.0.0
