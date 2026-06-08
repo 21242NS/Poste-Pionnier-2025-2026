@@ -2,11 +2,26 @@ import { Button, ErrorView, Spinner, Surface, TextField } from "heroui-native";
 import { Pressable, Text, View } from "react-native";
 
 import { Container } from "@/components/container";
+import { authClient } from "@/lib/auth-client";
 import { useTicket } from "hooks";
 import { orpc } from "@/utils/orpc";
 
 export default function Billets() {
+  const { data: session } = authClient.useSession();
   const { tickets, addTicket, description, setDescription } = useTicket(orpc);
+
+  if (!session?.user) {
+    return (
+      <Container className="p-6">
+        <Text className="text-2xl font-bold text-foreground mb-2">Billets</Text>
+        <View className="flex-1 items-center justify-center">
+          <Text className="text-muted text-center mb-2">
+            Connecte-toi pour voir et ajouter des billets.
+          </Text>
+        </View>
+      </Container>
+    );
+  }
 
   return (
     <Container className="p-4">

@@ -5,14 +5,17 @@ import { RPCLink } from "@orpc/client/fetch";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { env } from "@Poste-Pionnier-2025-2026/env/native";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
 
 import { authClient } from "@/lib/auth-client";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
-      console.log(error);
+      Alert.alert(
+        "Erreur",
+        error instanceof Error ? error.message : "Une erreur est survenue.",
+      );
     },
   }),
 });

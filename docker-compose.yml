@@ -68,7 +68,7 @@ services:
       sh -c "pnpm install --frozen-lockfile
       && pnpm db:generate
       && pnpm db:push
-      && pnpm exec turbo dev --ui=stream"
+      && pnpm dev"
 
 volumes:
   postgres-data:
