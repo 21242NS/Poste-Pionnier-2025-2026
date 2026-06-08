@@ -9,8 +9,8 @@ import { Container } from "@/components/container";
 
 // Coordonnées du local Poste Pionnier 124 – Watermael-Boitsfort
 const POST_LOCATION = {
-  latitude: 50.7977,
-  longitude: 4.4134,
+  latitude: 50.8024,
+  longitude: 4.4002,
   name: "Poste Pionnier 124",
   address: "Watermael-Boitsfort, Bruxelles",
 };
