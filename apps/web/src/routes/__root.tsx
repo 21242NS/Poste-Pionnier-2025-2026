@@ -8,6 +8,7 @@ import type { orpc } from "@/utils/orpc";
 
 import { Toaster } from "@/components/ui/sonner";
 
+import { useIdleLogout } from "@/hooks/use-idle-logout";
 import Header from "../components/header";
 import appCss from "../index.css?url";
 export interface RouterAppContext {
@@ -41,6 +42,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootDocument() {
+  useIdleLogout();
+
   return (
     <html lang="en" className="dark">
       <head>
