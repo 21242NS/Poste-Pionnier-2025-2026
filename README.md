@@ -46,6 +46,39 @@ pnpm run dev
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
 Use the Expo Go app to run the mobile application.
 
+## Run The Whole Project
+
+### Local development
+
+To start the whole monorepo locally:
+
+```bash
+pnpm run dev
+```
+
+This runs the development apps configured through Turbo.
+
+### Full project with Docker
+
+To start the full project with PostgreSQL, web/API, Prisma setup, and Expo:
+
+```bash
+pnpm run docker:dev
+```
+
+This command:
+
+- starts PostgreSQL
+- runs `pnpm install`
+- runs `pnpm db:generate`
+- runs `pnpm db:push`
+- starts `pnpm dev`
+
+In short:
+
+- `pnpm run dev` = whole monorepo locally
+- `pnpm run docker:dev` = whole project plus database through Docker
+
 ## Project Structure
 
 ```
@@ -68,13 +101,7 @@ Poste-Pionnier-2025-2026/
 - `pnpm run db:push`: Push schema changes to database
 - `pnpm run db:studio`: Open database studio UI
 
-## Docker Development
 
-You can boot PostgreSQL, the web/API server, and the Expo dev server with a single command:
-
-```bash
-docker compose up --build
-```
 
 This starts:
 
