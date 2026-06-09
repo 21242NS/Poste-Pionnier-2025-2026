@@ -46,6 +46,60 @@ pnpm run dev
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
 Use the Expo Go app to run the mobile application.
 
+## Run The Whole Project
+
+### Local development
+
+To start the whole monorepo locally:
+
+```bash
+pnpm run dev
+```
+
+This runs the development apps configured through Turbo.
+
+### Full project with Docker
+
+To start the full project with PostgreSQL, web/API, Prisma setup, and Expo:
+
+```bash
+pnpm run docker:dev
+```
+
+This command:
+
+- starts PostgreSQL
+- runs `pnpm install`
+- runs `pnpm db:generate`
+- runs `pnpm db:push`
+- starts `pnpm dev`
+
+In short:
+
+- `pnpm run dev` = whole monorepo locally
+- `pnpm run docker:dev` = whole project plus database through Docker
+
+With `pnpm run docker:dev`, this starts:
+
+- PostgreSQL on `5432`
+- Web/API on `http://localhost:3001`
+- Expo/Metro on `8081` with Expo ports `19000`, `19001`, and `19002`
+
+If you use Expo Go on a real device, make sure the device can reach your machine on the local network. The Docker helper script already injects your local IP through `HOST_IP`, so the recommended command is:
+
+```bash
+pnpm run docker:dev
+```
+
+If you run the containers manually instead of the npm script, you must provide a reachable server URL yourself, for example:
+
+```bash
+HOST_IP=YOUR_LOCAL_IP docker compose up --build
+```
+
+For simulators running on the same machine, the default `http://localhost:3001` is usually enough.
+
+
 ## Project Structure
 
 ```
@@ -68,24 +122,4 @@ Poste-Pionnier-2025-2026/
 - `pnpm run db:push`: Push schema changes to database
 - `pnpm run db:studio`: Open database studio UI
 
-## Docker Development
 
-You can boot PostgreSQL, the web/API server, and the Expo dev server with a single command:
-
-```bash
-docker compose up --build
-```
-
-This starts:
-
-- PostgreSQL on `5432`
-- Web/API on `http://localhost:3001`
-- Expo/Metro on `8081` with Expo ports `19000`, `19001`, and `19002`
-
-If you run the mobile app from Expo Go on a real device, override the server URL so the device can reach your machine:
-
-```bash
-EXPO_PUBLIC_SERVER_URL=http://YOUR_LOCAL_IP:3001 docker compose up --build
-```
-
-For simulators running on the same machine, the default `http://localhost:3001` is usually enough.
