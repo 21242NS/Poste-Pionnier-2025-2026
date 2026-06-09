@@ -35,6 +35,17 @@ export function useTicket(orpc: ORPC) {
   const [description, setDescription] = useState("");
   const updateTicket = useMutation(
     orpc.ticket.update.mutationOptions({
+      onMutate: ({ id, description }) => {
+        queryClient.setQueryData(orpc.ticket.list.queryKey(), (old: unknown) => {
+          const previousTickets = Array.isArray(old) ? old : [];
+
+          return previousTickets.map((ticket) =>
+            ticket.id === id
+              ? { ...ticket, description, updatedAt: new Date() }
+              : ticket,
+          );
+        });
+      },
       onSettled: () => {
         queryClient.invalidateQueries();
       },
@@ -42,6 +53,13 @@ export function useTicket(orpc: ORPC) {
   );
   const deleteTicket = useMutation(
     orpc.ticket.delete.mutationOptions({
+      onMutate: ({ id }) => {
+        queryClient.setQueryData(orpc.ticket.list.queryKey(), (old: unknown) => {
+          const previousTickets = Array.isArray(old) ? old : [];
+
+          return previousTickets.filter((ticket) => ticket.id !== id);
+        });
+      },
       onSettled: () => {
         queryClient.invalidateQueries();
       },

@@ -86,6 +86,12 @@ export function useCommand(orpc: ORPC) {
 
   const deleteCommandMutation = useMutation(
     orpc.command.deleteCommand.mutationOptions({
+      onMutate: ({ id }) => {
+        queryClient.setQueryData(orpc.command.list.queryKey(), (old: unknown) => {
+          const previousCommands = Array.isArray(old) ? old : [];
+          return previousCommands.filter((command) => command.id !== id);
+        });
+      },
       onSettled: () => {
         queryClient.invalidateQueries();
       },
@@ -94,6 +100,16 @@ export function useCommand(orpc: ORPC) {
 
   const updateCommandMutation = useMutation(
     orpc.command.updateCommand.mutationOptions({
+      onMutate: ({ id, data }) => {
+        queryClient.setQueryData(orpc.command.list.queryKey(), (old: unknown) => {
+          const previousCommands = Array.isArray(old) ? old : [];
+          return previousCommands.map((command) =>
+            command.id === id
+              ? { ...command, ...data, updatedAt: new Date() }
+              : command,
+          );
+        });
+      },
       onSettled: () => {
         queryClient.invalidateQueries();
       },
