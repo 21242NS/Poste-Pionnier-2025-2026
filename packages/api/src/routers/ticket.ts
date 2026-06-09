@@ -27,7 +27,7 @@ export const ticket = {
   }),
 
   create: protectedProcedure
-    .input(z.object({ description: z.string() }))
+    .input(z.object({ description: z.string().min(1) }))
     .handler(async ({ input, context }) => {
       return await prisma.ticket.create({
         data: {
@@ -44,7 +44,7 @@ export const ticket = {
       });
     }),
   update : protectedProcedure
-    .input(z.object({ id: z.string(), description: z.string() }))
+    .input(z.object({ id: z.string(), description: z.string().min(1) }))
     .handler(async ({ input, context }) => {
       return await prisma.ticket.update({
         where: { id: input.id },
